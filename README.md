@@ -1,16 +1,26 @@
-# demo
+# flutter ema
 
-A new Flutter project.
+Sample code for EMA flutter courses
 
 ## Getting Started
 
+You need flutter, android studio & visual studio code.
+
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Running the server.js file
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+The server.js file is a script which emulate robot communications. It's still a work in progress 
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+Here methods implemented (only methods returning value)
+
+- [X] DETECT
+- [ ] BOUSSOLE
+- [ ] DIST_US
+- [ ] POS_GPS
+- [ ] NBSTAT_GPS
+- [ ] ETAT_BATT
+
+To run it you need `nodejs` installed then run :
+
+`nodejs server.js`
