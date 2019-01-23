@@ -15,11 +15,11 @@ The server.js file is a script which emulate robot communications. It's still a 
 Here methods implemented (only methods returning value)
 
 - [X] DETECT
-- [ ] BOUSSOLE
-- [ ] DIST_US
-- [ ] POS_GPS
-- [ ] NBSTAT_GPS
-- [ ] ETAT_BATT
+- [X] BOUSSOLE
+- [X] DIST_US
+- [X] POS_GPS
+- [X] NBSTAT_GPS
+- [X] ETAT_BATT
 
 To run it you need `nodejs` installed then run :
 

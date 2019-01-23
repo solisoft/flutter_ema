@@ -30,17 +30,21 @@ net.createServer(function (sock) {
     }
 
     if (command == "DIST_US") {
-      sock.write("BOUSSOLE " + Math.ceil(Math.random() * 50) + " " + Math.ceil(Math.random() * 50) + " " + Math.ceil(Math.random() * 50) + "\n");
+      sock.write("DIST_US " + Math.ceil(Math.random() * 50) + " " + Math.ceil(Math.random() * 50) + " " + Math.ceil(Math.random() * 50) + "\n");
     }
 
     if (command == "POS_GPS") {
-      var long = (Math.ceil(Math.random() * 360) - 180) + "Â°" + Math.ceil(Math.random() * 60 + "'" + Math.ceil(Math.random() * 60)) + "\"\n"
-      var lat = (Math.ceil(Math.random() * 360) - 180) + "Â°" + Math.ceil(Math.random() * 60 + "'" + Math.ceil(Math.random() * 60)) + "\"\n"
+      var long = (Math.ceil(Math.random() * 360) - 180) + "°" + Math.ceil(Math.random() * 60 + "'" + Math.ceil(Math.random() * 60)) + "\"\n"
+      var lat = (Math.ceil(Math.random() * 360) - 180) + "°" + Math.ceil(Math.random() * 60 + "'" + Math.ceil(Math.random() * 60)) + "\"\n"
       sock.write("POS_GPS " + long + " " + lat + "\n");
     }
 
     if (command == "ETAT_BATT") {
       sock.write("ETAT_BATT " + (Math.random() * 12).toFixed(1) + "\n");
+    }
+
+    if (command == "NBSAT_GPS") {
+      sock.write("NBSAT_GPS " + (Math.random() * 5).toFixed(1) + "\n");
     }
 
   });
