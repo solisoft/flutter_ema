@@ -245,13 +245,103 @@ class _ControlPageState extends State<ControlPage> {
                     height: 20,
                   ),
                   RaisedButton(
-                      onPressed: () {},
-                      child: Column(
-                        children: <Widget>[
-                          Icon(FontAwesomeIcons.mapMarkerAlt),
-                          Text("0,0")
-                        ],
-                      )),
+                      onPressed: () {
+                        print("ETAT_BATT");
+                        socket.write("ETAT_BATT");
+                      },
+                      child: Text("Battery")),
+                  Center(
+                    child: StreamBuilder<num>(
+                        stream: socket.volt,
+                        initialData: 0,
+                        builder: (BuildContext c, AsyncSnapshot<num> data) {
+                          if (data.data < 3) {
+                            return Icon(FontAwesomeIcons.batteryEmpty);
+                          }
+                          if (data.data >= 3 && data.data < 6) {
+                            return Icon(FontAwesomeIcons.batteryQuarter);
+                          }
+                          if (data.data >= 6 && data.data < 9) {
+                            return Icon(FontAwesomeIcons.batteryHalf);
+                          }
+                          if (data.data >= 9) {
+                            return Icon(FontAwesomeIcons.batteryFull);
+                          }
+                        }),
+                  ),
+                  RaisedButton(
+                      onPressed: () {
+                        print("POS_GPS");
+                        socket.write("POS_GPS");
+                      },
+                      child: Text("POS GPS")),
+                  Center(
+                    child: StreamBuilder<String>(
+                        stream: socket.long,
+                        initialData: "",
+                        builder: (BuildContext c, AsyncSnapshot<String> data) {
+                          return Text(data.data);
+                        }),
+                  ),
+                  Center(
+                    child: StreamBuilder<String>(
+                        stream: socket.lat,
+                        initialData: "",
+                        builder: (BuildContext c, AsyncSnapshot<String> data) {
+                          return Text(data.data);
+                        }),
+                  ),
+                  RaisedButton(
+                      onPressed: () {
+                        print("DIST_US");
+                        socket.write("DIST_US");
+                      },
+                      child: Text("DIST US")),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: StreamBuilder<String>(
+                            stream: socket.distg,
+                            initialData: "",
+                            builder:
+                                (BuildContext c, AsyncSnapshot<String> data) {
+                              return Center(child: Text(data.data));
+                            }),
+                      ),
+                      Expanded(
+                        child: StreamBuilder<String>(
+                            stream: socket.distc,
+                            initialData: "",
+                            builder:
+                                (BuildContext c, AsyncSnapshot<String> data) {
+                              return Center(child: Text(data.data));
+                            }),
+                      ),
+                      Expanded(
+                        child: StreamBuilder<String>(
+                            stream: socket.distd,
+                            initialData: "",
+                            builder:
+                                (BuildContext c, AsyncSnapshot<String> data) {
+                              return Center(child: Text(data.data));
+                            }),
+                      )
+                    ],
+                  ),
+                  RaisedButton(
+                      onPressed: () {
+                        print("BOUSSOLE");
+                        socket.write("BOUSSOLE");
+                      },
+                      child: Text("BOUSSOLE")),
+                  Center(
+                    child: StreamBuilder<String>(
+                        stream: socket.boussole,
+                        initialData: "",
+                        builder: (BuildContext c, AsyncSnapshot<String> data) {
+                          return Center(child: Text(data.data));
+                        }),
+                  ),
                   Center(
                     child: RaisedButton(
                         onPressed: () {
@@ -259,7 +349,7 @@ class _ControlPageState extends State<ControlPage> {
                           Navigator.pop(context);
                         },
                         child: Icon(FontAwesomeIcons.signOutAlt)),
-                  ),
+                  )
                 ],
               ),
             );
