@@ -19,17 +19,29 @@ class _ControlPageState extends State<ControlPage> {
   final RobotSocket socket;
   double speed = 50.0;
   String date = DateTime.now().toIso8601String();
+
   String imagerobot = "https://picsum.photos/600/300";
   String oldimagerobot = "https://picsum.photos/600/300";
 
+  IconData iconMenuPince1 = FontAwesomeIcons.dotCircle;
+  IconData iconMenuPince2 = FontAwesomeIcons.dotCircle;
+
+  Timer timer;
+
   void runTimer() {
-    Timer timer = new Timer(new Duration(seconds: 3), () {
+    timer = new Timer(new Duration(seconds: 3), () {
       setState(() {
         oldimagerobot = "https://picsum.photos/600/300?" + date;
         date = DateTime.now().toIso8601String();
         imagerobot = "https://picsum.photos/600/300?" + date;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -199,7 +211,11 @@ class _ControlPageState extends State<ControlPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Center(child: Text("Pince")),
+                      child: Row(children: <Widget>[
+                        Expanded(child: Text("Pince")),
+                        Expanded(child: Icon(iconMenuPince1)),
+                        Expanded(child: Icon(iconMenuPince2)),
+                      ]),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(30.0),
@@ -210,6 +226,9 @@ class _ControlPageState extends State<ControlPage> {
                               onTapDown: (e) {
                                 print("Ouvrir Pince");
                                 socket.write("OUVRIR_PINCE");
+                                setState(() {
+                                  iconMenuPince1 = FontAwesomeIcons.lockOpen;
+                                });
                               },
                               child: Icon(FontAwesomeIcons.teethOpen),
                             ),
@@ -219,6 +238,10 @@ class _ControlPageState extends State<ControlPage> {
                               onTapDown: (e) {
                                 print("Lever Pince");
                                 socket.write("LEVER_PINCE");
+                                setState(() {
+                                  iconMenuPince2 =
+                                      FontAwesomeIcons.arrowAltCircleUp;
+                                });
                               },
                               child: Icon(FontAwesomeIcons.arrowUp),
                             ),
@@ -228,6 +251,10 @@ class _ControlPageState extends State<ControlPage> {
                               onTapDown: (e) {
                                 print("Baisser Pince");
                                 socket.write("BAISSER_PINCE");
+                                setState(() {
+                                  iconMenuPince2 =
+                                      FontAwesomeIcons.arrowCircleDown;
+                                });
                               },
                               child: Icon(FontAwesomeIcons.arrowDown),
                             ),
@@ -237,6 +264,9 @@ class _ControlPageState extends State<ControlPage> {
                               onTapDown: (e) {
                                 print("Fermer Pince");
                                 socket.write("FERMER_PINCE");
+                                setState(() {
+                                  iconMenuPince1 = FontAwesomeIcons.lock;
+                                });
                               },
                               child: Icon(FontAwesomeIcons.teeth),
                             ),
