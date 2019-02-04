@@ -38,8 +38,8 @@ net.createServer(function (sock) {
     }
 
     if (command == "POS_GPS") {
-      var long = (Math.ceil(Math.random() * 360) - 180) + "°" + Math.ceil(Math.random() * 60 + "'" + Math.ceil(Math.random() * 60)) + "\"\n"
-      var lat = (Math.ceil(Math.random() * 360) - 180) + "°" + Math.ceil(Math.random() * 60 + "'" + Math.ceil(Math.random() * 60)) + "\"\n"
+      var long = (Math.ceil(Math.random() * 360) - 180) + "ï¿½" + Math.ceil(Math.random() * 60 + "'" + Math.ceil(Math.random() * 60)) + "\"\n"
+      var lat = (Math.ceil(Math.random() * 360) - 180) + "ï¿½" + Math.ceil(Math.random() * 60 + "'" + Math.ceil(Math.random() * 60)) + "\"\n"
       var str = "POS_GPS " + long + " " + lat + "\n";
       sock.write(str);
       console.log("> " + str);
@@ -52,7 +52,7 @@ net.createServer(function (sock) {
     }
 
     if (command == "NBSAT_GPS") {
-      var str = "NBSAT_GPS " + (Math.random() * 5).toFixed(1) + "\n";
+      var str = "NBSAT_GPS " + Math.ceil((Math.random() * 5)) + "\n";
       sock.write(str);
       console.log("> " + str);
     }

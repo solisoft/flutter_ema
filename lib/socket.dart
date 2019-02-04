@@ -49,6 +49,10 @@ class RobotSocket {
   BehaviorSubject<String> _boussole = BehaviorSubject<String>();
   Stream<String> get boussole => _boussole.stream;
 
+  // nb Satellites
+  BehaviorSubject<String> _nbsat = BehaviorSubject<String>();
+  Stream<String> get nbsat => _nbsat.stream;
+
   RobotSocket();
 
   void close() {
@@ -57,6 +61,7 @@ class RobotSocket {
 
   void connect(host, port) {
     _volt.add(0);
+    _nbsat.add("0");
     _long.add("");
     _lat.add("");
     _distg.add("");
@@ -103,6 +108,10 @@ class RobotSocket {
       _volt.add(num.parse(message.split(" ")[1]));
     }
 
+    if (message.contains("NBSAT_GPS")) {
+      _nbsat.add(message.split(" ")[1]);
+    }
+
     if (message.contains("BOUSSOLE")) {
       _boussole.add(message.split(" ")[1]);
     }
@@ -111,6 +120,7 @@ class RobotSocket {
       _long.add(message.split(" ")[1]);
       _lat.add(message.split(" ")[2]);
     }
+
     if (message.contains("DIST_US")) {
       _distg.add(message.split(" ")[1]);
       _distc.add(message.split(" ")[2]);

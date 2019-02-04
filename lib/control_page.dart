@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'socket.dart';
+import 'dart:async';
 
 class ControlPage extends StatefulWidget {
   ControlPage({Key key, this.socket}) : super(key: key);
@@ -16,6 +17,10 @@ class _ControlPageState extends State<ControlPage> {
 
   final RobotSocket socket;
   double speed = 50.0;
+
+  Timer timer = new Timer.periodic(new Duration(seconds: 5), (timer) {
+    debugPrint("Print after 5 seconds");
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +223,44 @@ class _ControlPageState extends State<ControlPage> {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(child: Text("Caméra")),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: GestureDetector(
+                            onTapDown: (e) {
+                              print("CAM_GAUCHE");
+                              socket.write("CAM_GAUCHE");
+                            },
+                            child: Icon(FontAwesomeIcons.arrowAltCircleLeft),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTapDown: (e) {
+                              print("CAM_DEVANT");
+                              socket.write("CAM_DEVANT");
+                            },
+                            child: Icon(FontAwesomeIcons.arrowAltCircleUp),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTapDown: (e) {
+                              print("CAM_DROITE");
+                              socket.write("CAM_DROITE");
+                            },
+                            child: Icon(FontAwesomeIcons.arrowAltCircleRight),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   Divider(
                     height: 20,
                   ),
@@ -341,6 +384,25 @@ class _ControlPageState extends State<ControlPage> {
                         builder: (BuildContext c, AsyncSnapshot<String> data) {
                           return Center(child: Text(data.data));
                         }),
+                  ),
+                  Center(
+                    child: RaisedButton(
+                        onPressed: () {
+                          print("NBSAT_GPS");
+                          socket.write("NBSAT_GPS");
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Text("NBSAT_GPS"),
+                            StreamBuilder<String>(
+                                stream: socket.nbsat,
+                                initialData: "0",
+                                builder: (BuildContext c,
+                                    AsyncSnapshot<String> data) {
+                                  return Center(child: Text(data.data));
+                                }),
+                          ],
+                        )),
                   ),
                   Center(
                     child: RaisedButton(
