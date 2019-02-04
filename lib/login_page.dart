@@ -12,11 +12,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String ip = "";
-  int port = 0;
+  var textIPController = new TextEditingController(text: "127.0.0.1");
+  var textPortController = new TextEditingController(text: "8888");
 
   void _goToControlPage() {
-    socket.connect(ip, port);
+    socket.connect(textIPController.text, int.parse(textPortController.text));
     _goToControlPageNoConnect();
   }
 
@@ -46,9 +46,9 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           children: <Widget>[
                             Text("IP"),
-                            TextField(onChanged: (text) {
-                              ip = text;
-                            }),
+                            TextField(
+                              controller: textIPController,
+                            )
                           ],
                         ),
                       ),
@@ -56,9 +56,9 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           children: <Widget>[
                             Text("Port"),
-                            TextField(onChanged: (text) {
-                              port = int.parse(text);
-                            }),
+                            TextField(
+                              controller: textPortController,
+                            )
                           ],
                         ),
                       ),

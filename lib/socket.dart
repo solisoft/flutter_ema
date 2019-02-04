@@ -15,10 +15,13 @@ class RobotSocket {
   // Capteurs
   BehaviorSubject<bool> _avg = BehaviorSubject<bool>();
   Stream<bool> get avg => _avg.stream;
+
   BehaviorSubject<bool> _avd = BehaviorSubject<bool>();
   Stream<bool> get avd => _avd.stream;
+
   BehaviorSubject<bool> _arg = BehaviorSubject<bool>();
   Stream<bool> get arg => _arg.stream;
+
   BehaviorSubject<bool> _ard = BehaviorSubject<bool>();
   Stream<bool> get ard => _ard.stream;
 
@@ -40,8 +43,10 @@ class RobotSocket {
   // Distance Ulta Son
   BehaviorSubject<String> _distg = BehaviorSubject<String>();
   Stream<String> get distg => _distg.stream;
+
   BehaviorSubject<String> _distc = BehaviorSubject<String>();
   Stream<String> get distc => _distc.stream;
+
   BehaviorSubject<String> _distd = BehaviorSubject<String>();
   Stream<String> get distd => _distd.stream;
 
