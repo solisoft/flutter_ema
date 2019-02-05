@@ -12,6 +12,9 @@ class RobotSocket {
   BehaviorSubject<String> _receiveMsg = BehaviorSubject<String>();
   Stream<String> get data => _receiveMsg.stream;
 
+  BehaviorSubject<List<String>> _messages = BehaviorSubject<List<String>>();
+  Stream<List<String>> get messages => _messages.stream;
+
   // Capteurs
   BehaviorSubject<bool> _avg = BehaviorSubject<bool>();
   Stream<bool> get avg => _avg.stream;
@@ -60,6 +63,8 @@ class RobotSocket {
 
   RobotSocket();
 
+  List<String> commands = [];
+
   void close() {
     socket.close();
   }
@@ -96,6 +101,12 @@ class RobotSocket {
   void dataHandler(data) {
     String message = new String.fromCharCodes(data).trim();
     _receiveMsg.add(message);
+
+    commands.add(message);
+    commands = commands.skip(commands.length - 3).toList();
+
+    _messages.add(commands);
+
     if (message.contains("DETECT")) {
       _avg.add(false);
       _avd.add(false);

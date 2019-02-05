@@ -38,6 +38,21 @@ class _ControlPageState extends State<ControlPage> {
     });
   }
 
+  String convertGPS(String coords) {
+    if (coords != "") {
+      int degree = int.parse(coords.split("Â°")[0]);
+      int minutes = int.parse(coords.split("Â°")[1].split("'")[0]);
+      int secondes =
+          int.parse(coords.split("Â°")[1].split("'")[1].split('"')[0]);
+      num decimal = degree + minutes / 60 + secondes / 3600;
+      return "$decimal";
+    } else {
+      return "";
+    }
+  }
+
+  List<String> commands = [];
+
   @override
   void dispose() {
     timer.cancel();
@@ -66,6 +81,15 @@ class _ControlPageState extends State<ControlPage> {
                       placeholder: NetworkImage(oldimagerobot),
                       image: NetworkImage(imagerobot),
                       fit: BoxFit.cover,
+                    ),
+                    Center(
+                      child: StreamBuilder<List<String>>(
+                          stream: socket.messages,
+                          initialData: [],
+                          builder: (BuildContext c,
+                              AsyncSnapshot<List<String>> list) {
+                            return Text(list.data.join("\n"));
+                          }),
                     ),
                     Center(
                       child: RaisedButton(
@@ -370,7 +394,7 @@ class _ControlPageState extends State<ControlPage> {
                           initialData: "",
                           builder:
                               (BuildContext c, AsyncSnapshot<String> data) {
-                            return Text(data.data);
+                            return Text(convertGPS(data.data));
                           }),
                     ),
                     Center(
@@ -379,7 +403,7 @@ class _ControlPageState extends State<ControlPage> {
                           initialData: "",
                           builder:
                               (BuildContext c, AsyncSnapshot<String> data) {
-                            return Text(data.data);
+                            return Text(convertGPS(data.data));
                           }),
                     ),
                     RaisedButton(
