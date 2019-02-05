@@ -20,8 +20,8 @@ class _ControlPageState extends State<ControlPage> {
   double speed = 50.0;
   String date = DateTime.now().toIso8601String();
 
-  String imagerobot = "https://picsum.photos/600/300";
-  String oldimagerobot = "https://picsum.photos/600/300";
+  String imagerobot = "https://picsum.photos/1200/800";
+  String oldimagerobot = "https://picsum.photos/1200/800";
 
   IconData iconMenuPince1 = FontAwesomeIcons.dotCircle;
   IconData iconMenuPince2 = FontAwesomeIcons.dotCircle;
@@ -58,10 +58,6 @@ class _ControlPageState extends State<ControlPage> {
         builder: (BuildContext c, AsyncSnapshot<bool> data) {
           if (data.data)
             return Container(
-              /*decoration: new BoxDecoration(
-                image: new DecorationImage(
-                    image: new NetworkImage(imagerobot), fit: BoxFit.cover),
-              ),*/
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListView(
@@ -69,6 +65,7 @@ class _ControlPageState extends State<ControlPage> {
                     new FadeInImage(
                       placeholder: NetworkImage(oldimagerobot),
                       image: NetworkImage(imagerobot),
+                      fit: BoxFit.cover,
                     ),
                     Center(
                       child: RaisedButton(
