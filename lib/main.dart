@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart';
+import 'scratch_page.dart';
+import 'landscape_page.dart';
 
 void main() {
   runApp(new MaterialApp(
@@ -7,6 +8,6 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: LoginPage(),
+    home: LandscapePage(),
   ));
 }

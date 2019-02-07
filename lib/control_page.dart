@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong/latlong.dart';
 import 'socket.dart';
 import 'dart:async';
 
@@ -30,6 +31,7 @@ class _ControlPageState extends State<ControlPage> {
 
   void runTimer() {
     timer = new Timer(new Duration(seconds: 3), () {
+      debugPrint("Timer ...");
       setState(() {
         oldimagerobot = "https://picsum.photos/600/300?" + date;
         date = DateTime.now().toIso8601String();
@@ -54,6 +56,11 @@ class _ControlPageState extends State<ControlPage> {
   List<String> commands = [];
 
   @override
+  initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     timer.cancel();
     super.dispose();
@@ -61,6 +68,8 @@ class _ControlPageState extends State<ControlPage> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(socket.boolConnected.toString());
+
     runTimer();
 
     return Scaffold(
@@ -107,7 +116,10 @@ class _ControlPageState extends State<ControlPage> {
                                 builder:
                                     (BuildContext c, AsyncSnapshot<bool> data) {
                                   if (data.data)
-                                    return Icon(FontAwesomeIcons.solidCircle);
+                                    return Icon(
+                                      FontAwesomeIcons.solidCircle,
+                                      color: Colors.green,
+                                    );
                                   else {
                                     return Icon(FontAwesomeIcons.circle);
                                   }
@@ -119,7 +131,10 @@ class _ControlPageState extends State<ControlPage> {
                                 builder:
                                     (BuildContext c, AsyncSnapshot<bool> data) {
                                   if (data.data)
-                                    return Icon(FontAwesomeIcons.solidCircle);
+                                    return Icon(
+                                      FontAwesomeIcons.solidCircle,
+                                      color: Colors.green,
+                                    );
                                   else
                                     return Icon(FontAwesomeIcons.circle);
                                 })),
@@ -134,7 +149,10 @@ class _ControlPageState extends State<ControlPage> {
                                 builder:
                                     (BuildContext c, AsyncSnapshot<bool> data) {
                                   if (data.data)
-                                    return Icon(FontAwesomeIcons.solidCircle);
+                                    return Icon(
+                                      FontAwesomeIcons.solidCircle,
+                                      color: Colors.green,
+                                    );
                                   else
                                     return Icon(FontAwesomeIcons.circle);
                                 })),
@@ -145,7 +163,10 @@ class _ControlPageState extends State<ControlPage> {
                                 builder:
                                     (BuildContext c, AsyncSnapshot<bool> data) {
                                   if (data.data)
-                                    return Icon(FontAwesomeIcons.solidCircle);
+                                    return Icon(
+                                      FontAwesomeIcons.solidCircle,
+                                      color: Colors.green,
+                                    );
                                   else
                                     return Icon(FontAwesomeIcons.circle);
                                 })),

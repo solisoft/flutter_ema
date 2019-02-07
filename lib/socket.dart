@@ -8,6 +8,8 @@ class RobotSocket {
   String port = '';
   String ip = '';
 
+  bool boolConnected = false;
+
   // Raw message
   BehaviorSubject<String> _receiveMsg = BehaviorSubject<String>();
   Stream<String> get data => _receiveMsg.stream;
@@ -89,6 +91,7 @@ class RobotSocket {
           onError: errorHandler, onDone: doneHandler, cancelOnError: false);
       _receiveMsg.add("Connected");
       _connected.add(true);
+      boolConnected = true;
     }).catchError((AsyncError e) {
       print("Unable to connect: $e");
     });
@@ -100,48 +103,49 @@ class RobotSocket {
 
   void dataHandler(data) {
     String message = new String.fromCharCodes(data).trim();
-    _receiveMsg.add(message);
 
-    commands.add(message);
-    commands = commands.skip(commands.length - 3).toList();
+    message.split("\n").forEach((msg) {
+      _receiveMsg.add(msg);
+      commands.add(msg);
+      commands = commands.skip(commands.length - 3).toList();
+      _messages.add(commands);
 
-    _messages.add(commands);
+      if (msg.contains("DETECT")) {
+        _avg.add(false);
+        _avd.add(false);
+        _arg.add(false);
+        _ard.add(false);
+        msg.split(" ").forEach((command) {
+          if (command == "AVG") _avg.add(true);
+          if (command == "AVD") _avd.add(true);
+          if (command == "ARG") _arg.add(true);
+          if (command == "ARD") _ard.add(true);
+        });
+      }
 
-    if (message.contains("DETECT")) {
-      _avg.add(false);
-      _avd.add(false);
-      _arg.add(false);
-      _ard.add(false);
-      message.split(" ").forEach((command) {
-        if (command == "AVG") _avg.add(true);
-        if (command == "AVD") _avd.add(true);
-        if (command == "ARG") _arg.add(true);
-        if (command == "ARD") _ard.add(true);
-      });
-    }
+      if (msg.contains("ETAT_BATT")) {
+        _volt.add(num.parse(msg.split(" ")[1]));
+      }
 
-    if (message.contains("ETAT_BATT")) {
-      _volt.add(num.parse(message.split(" ")[1]));
-    }
+      if (msg.contains("NBSAT_GPS")) {
+        _nbsat.add(msg.split(" ")[1]);
+      }
 
-    if (message.contains("NBSAT_GPS")) {
-      _nbsat.add(message.split(" ")[1]);
-    }
+      if (msg.contains("BOUSSOLE")) {
+        _boussole.add(msg.split(" ")[1]);
+      }
 
-    if (message.contains("BOUSSOLE")) {
-      _boussole.add(message.split(" ")[1]);
-    }
+      if (msg.contains("POS_GPS")) {
+        _long.add(msg.split(" ")[1]);
+        _lat.add(msg.split(" ")[2]);
+      }
 
-    if (message.contains("POS_GPS")) {
-      _long.add(message.split(" ")[1]);
-      _lat.add(message.split(" ")[2]);
-    }
-
-    if (message.contains("DIST_US")) {
-      _distg.add(message.split(" ")[1]);
-      _distc.add(message.split(" ")[2]);
-      _distd.add(message.split(" ")[3]);
-    }
+      if (msg.contains("DIST_US")) {
+        _distg.add(msg.split(" ")[1]);
+        _distc.add(msg.split(" ")[2]);
+        _distd.add(msg.split(" ")[3]);
+      }
+    });
   }
 
   void errorHandler(error, StackTrace trace) {}
