@@ -33,7 +33,6 @@ class _ControlPageState extends State<ControlPage> {
   void runTimer() {
     timer = new Timer(new Duration(seconds: 3), () {
       date = DateTime.now().toIso8601String();
-      debugPrint("http://" + socket.ip + "/vueRobot.jpg?" + date);
       setState(() {
         imagerobot = "http://" + socket.ip + "/vueRobot.jpg?" + date;
       });
@@ -74,8 +73,6 @@ class _ControlPageState extends State<ControlPage> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(socket.boolConnected.toString());
-
     runTimer();
 
     return Scaffold(
@@ -417,6 +414,7 @@ class _ControlPageState extends State<ControlPage> {
                           initialData: "",
                           builder:
                               (BuildContext c, AsyncSnapshot<String> data) {
+                            debugPrint("long " + data.data);
                             return Text(convertGPS(data.data));
                           }),
                     ),
@@ -426,6 +424,7 @@ class _ControlPageState extends State<ControlPage> {
                           initialData: "",
                           builder:
                               (BuildContext c, AsyncSnapshot<String> data) {
+                            debugPrint("lat " + data.data);
                             return Text(convertGPS(data.data));
                           }),
                     ),

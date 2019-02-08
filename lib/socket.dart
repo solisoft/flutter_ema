@@ -65,8 +65,6 @@ class RobotSocket {
 
   RobotSocket();
 
-  List<String> commands = [];
-
   void close() {
     socket.close();
   }
@@ -107,9 +105,6 @@ class RobotSocket {
 
     message.split("\n").forEach((msg) {
       _receiveMsg.add(msg);
-      commands.add(msg);
-      commands = commands.skip(commands.length - 3).toList();
-      _messages.add(commands);
 
       if (msg.contains("DETECT")) {
         _avg.add(false);
@@ -137,6 +132,7 @@ class RobotSocket {
       }
 
       if (msg.contains("POS_GPS")) {
+        print(msg.toString());
         _long.add(msg.split(" ")[1]);
         _lat.add(msg.split(" ")[2]);
       }
