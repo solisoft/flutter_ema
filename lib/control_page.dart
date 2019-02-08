@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
+import 'package:sensors/sensors.dart';
+
 import 'socket.dart';
 import 'dart:async';
 
@@ -30,10 +32,10 @@ class _ControlPageState extends State<ControlPage> {
 
   void runTimer() {
     timer = new Timer(new Duration(seconds: 3), () {
-      debugPrint("Timer ...");
+      date = DateTime.now().toIso8601String();
+      debugPrint("http://" + socket.ip + "/vueRobot.jpg?" + date);
       setState(() {
-        date = DateTime.now().toIso8601String();
-        imagerobot = "https://picsum.photos/600/300?" + date;
+        imagerobot = "http://" + socket.ip + "/vueRobot.jpg?" + date;
       });
     });
   }
@@ -42,8 +44,8 @@ class _ControlPageState extends State<ControlPage> {
     if (coords != "") {
       int degree = int.parse(coords.split("Â°")[0]);
       int minutes = int.parse(coords.split("Â°")[1].split("'")[0]);
-      int secondes =
-          int.parse(coords.split("Â°")[1].split("'")[1].split('"')[0]);
+      double secondes =
+          double.parse(coords.split("Â°")[1].split("'")[1].split('"')[0]);
 
       if (coords.indexOf("S") > 0) degree = 0 - degree;
       if (coords.indexOf("O") > 0) degree = 0 - degree;
@@ -59,6 +61,9 @@ class _ControlPageState extends State<ControlPage> {
   @override
   initState() {
     super.initState();
+    accelerometerEvents.listen((AccelerometerEvent event) {});
+
+    gyroscopeEvents.listen((GyroscopeEvent event) {});
   }
 
   @override
@@ -87,7 +92,7 @@ class _ControlPageState extends State<ControlPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: ListView(
                   children: <Widget>[
-                    new Image.network(imagerobot, gaplessPlayback: true),
+                    Image.network(imagerobot, gaplessPlayback: true),
                     Center(
                       child: StreamBuilder<List<String>>(
                           stream: socket.messages,

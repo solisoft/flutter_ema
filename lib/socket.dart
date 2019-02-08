@@ -72,6 +72,7 @@ class RobotSocket {
   }
 
   void connect(host, port) {
+    ip = host;
     _volt.add(0);
     _nbsat.add("0");
     _long.add("");
