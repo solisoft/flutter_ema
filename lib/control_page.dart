@@ -21,19 +21,17 @@ class _ControlPageState extends State<ControlPage> {
   double speed = 50.0;
   String date = DateTime.now().toIso8601String();
 
-  String imagerobot = "https://picsum.photos/1200/800";
-  String oldimagerobot = "https://picsum.photos/1200/800";
-
   IconData iconMenuPince1 = FontAwesomeIcons.dotCircle;
   IconData iconMenuPince2 = FontAwesomeIcons.dotCircle;
 
   Timer timer;
 
+  String imagerobot = "https://picsum.photos/1200/800";
+
   void runTimer() {
     timer = new Timer(new Duration(seconds: 3), () {
       debugPrint("Timer ...");
       setState(() {
-        oldimagerobot = "https://picsum.photos/600/300?" + date;
         date = DateTime.now().toIso8601String();
         imagerobot = "https://picsum.photos/600/300?" + date;
       });
@@ -86,11 +84,7 @@ class _ControlPageState extends State<ControlPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: ListView(
                   children: <Widget>[
-                    new FadeInImage(
-                      placeholder: NetworkImage(oldimagerobot),
-                      image: NetworkImage(imagerobot),
-                      fit: BoxFit.cover,
-                    ),
+                    new Image.network(imagerobot, gaplessPlayback: true),
                     Center(
                       child: StreamBuilder<List<String>>(
                           stream: socket.messages,
