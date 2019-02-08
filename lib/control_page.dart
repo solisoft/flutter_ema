@@ -44,6 +44,9 @@ class _ControlPageState extends State<ControlPage> {
       int minutes = int.parse(coords.split("Â°")[1].split("'")[0]);
       int secondes =
           int.parse(coords.split("Â°")[1].split("'")[1].split('"')[0]);
+
+      if (coords.indexOf("S") > 0) degree = 0 - degree;
+      if (coords.indexOf("O") > 0) degree = 0 - degree;
       num decimal = degree + minutes / 60 + secondes / 3600;
       return "$decimal";
     } else {

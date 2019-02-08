@@ -38,8 +38,8 @@ net.createServer(function (sock) {
     }
 
     if (command == "POS_GPS") {
-      var long = (Math.ceil(Math.random() * 360) - 180) + "\u00B0" + Math.ceil(Math.random() * 60) + "'" + Math.ceil(Math.random() * 60) + "\" E\n"
-      var lat = (Math.ceil(Math.random() * 360) - 180) + "\u00B0" + Math.ceil(Math.random() * 60) + "'" + Math.ceil(Math.random() * 60) + "\" N\n"
+      var long = (Math.ceil(Math.random() * 360) - 180) + "\u00B0" + Math.ceil(Math.random() * 60) + "'" + Math.ceil(Math.random() * 60) + "\"E\n"
+      var lat = (Math.ceil(Math.random() * 360) - 180) + "\u00B0" + Math.ceil(Math.random() * 60) + "'" + Math.ceil(Math.random() * 60) + "\"N\n"
       var str = "POS_GPS " + long + " " + lat + "\n";
       sock.write(str);
       console.log("> " + str);
