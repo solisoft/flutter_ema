@@ -14,8 +14,8 @@ class _LandscapePageState extends State<LandscapePage> {
   double _height = 0;
   double _opacity = 0.2;
 
-  //bool hLeftMove = false;
-  //bool hRightMove = false;
+  bool hLeftMove = false;
+  bool hRightMove = false;
   bool vUpMove = false;
   bool vDownMove = false;
 
